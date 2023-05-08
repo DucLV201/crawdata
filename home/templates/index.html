@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotel search</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          background-color: #f2f2f2;
+        }
+        
+        th, td {
+          text-align: left;
+          padding: 8px;
+          border: 1px solid #ddd;
+        }
+        
+        th {
+          background-color: #4CAF50;
+          color: white;
+        }
+      span{
+        font-weight: 300;
+      }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" style="background-color:lavender;">
+                <h3>Tìm theo khoảng giá</h3>
+                <form action="/search_price" method="post">
+                    <label for="min_price">Min price:</label>
+                    <input type="text" name="min_price"><br><br>
+                    <label for="max_price">Max price:</label>
+                    <input type="text" name="max_price"><br><br>
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+            <div class="col-md-4" style="background-color:lavenderblush;">
+                <h3>Tìm theo khoảng sao</h3>
+                <form action="/search_star" method="post">
+                    <label for="min_star">Min star:</label>
+                    <input type="text" name="min_star"><br><br>
+                    <label for="max_star">Max star:</label>
+                    <input type="text" name="max_star"><br><br>
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+            <div class="col-md-4" style="background-color:lavender;">
+                <h3>Tìm bất kỳ</h3>
+                <form action="/search" method="post">
+                    <label for="kytu">Nhập:</label>
+                    <input type="text" name="kytu"><br><br>
+                    <div style="height: 47.6px;"></div>
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+      <h1>Search Result</h1>
+	{% if result %}
+		<table>
+          <thead>
+            <tr>
+              <th>Tên Khách Sạn</th>
+              <th>Giá</th>
+              <th>Sao</th>
+              <th>Đường dẫn</th>
+            </tr>
+          </thead>
+          <tbody>
+			{% for hotel in result["hotels"] %}
+            <tr>
+              <td>{{ hotel[0] }}</td>
+              <td>{{ hotel[1] }} <span>VNĐ</span></td>
+              <td>{{ hotel[2] }}</td>
+              <td><a href="{{ hotel[3] }}">Book now</a></td>
+            </tr>		
+			{% endfor %}
+          </tbody>
+		</table>
+	{% else %}
+		<p>No results found</p>
+	{% endif %}
+    </div>
+</body>
+</html>

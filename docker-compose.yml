@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  mysql:
+    build:
+      context: ./mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "psw123"
+    ports:
+      - "6603:3306"
+    networks:
+      - my-network
+
+  craw:
+    build:
+      context: ./craw
+    container_name: craw
+    ports: 
+      - "8001:9001"
+    networks:
+      - my-network
+
+  mysql_api:
+    build:
+      context: ./mysql_api
+    container_name: mysql_api
+    ports: 
+      - "8002:9002"
+    networks:
+      - my-network
+
+  home:
+    build:
+      context: ./home
+    container_name: home
+    ports: 
+      - "8003:9003"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
